@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { signOut, getProviders, signIn } from "next-auth/react";
+import { signOut, getProviders, signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 const Nav = () => {
-  const isUserLoggedin = true;
+  const {data: session } = useSession()
 
   const [providers, setproviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -36,7 +36,7 @@ const Nav = () => {
 
       {/* Desktop Navgation */}
       <div className="sm:flex hidden">
-        {isUserLoggedin ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-post" className="black_btn">
               Create Post
@@ -73,7 +73,7 @@ const Nav = () => {
 
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
-        {isUserLoggedin ? (
+        {session?.user ? (
           <div className="flex ">
             <Image
               src="/assets/images/logo.svg"
